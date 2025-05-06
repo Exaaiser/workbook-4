@@ -6,33 +6,20 @@ public class Employee {
     private String department;
     private double payRate;
     private double hoursWorked;
+    private boolean isPunchedIn;
+    private double startTime;
 
     // Constructor
-    public Employee(String employeeId, String name, String department, double payRate, double hoursWorked)
-    {if (employeeId == null || employeeId.trim().isEmpty()) {
-        new IllegalArgumentException("Employee ID cannot be null or empty");
+    public Employee(String employeeId, String name, String department, double payRate, double hoursWorked) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.department = department;
+        this.payRate = payRate > 0 ? payRate : 0.0;
+        this.hoursWorked = hoursWorked >= 0 ? hoursWorked : 0.0;
+        this.isPunchedIn = false;
+        this.startTime = 0.0;
     }
-        if (name == null || name.trim().isEmpty()) {
-        new IllegalArgumentException("Name cannot be null or empty");
-    }
-        if (department == null || department.trim().isEmpty()) {
-        new IllegalArgumentException("Department cannot be null or empty");
-    }
-        if (payRate <= 0) {
-        new IllegalArgumentException("Pay rate must be positive");
-    }
-        if (hoursWorked < 0) {
-        new IllegalArgumentException("Hours worked cannot be negative");
-    }
-        {
-            this.employeeId = employeeId;
-            this.name = name;
-            this.department = department;
-            this.payRate = payRate;
-            this.hoursWorked = hoursWorked;
 
-        }
-    }
 
     public String getName() {
         return name;
@@ -79,5 +66,19 @@ public class Employee {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+    public void punchTimeCard(double time) {
+        if (!isPunchedIn) {
+            // Punch in
+            this.startTime = time;
+            this.isPunchedIn = true;
+        } else {
+            // Punch out
+            double hours = time - startTime;
+            if (hours >= 0) {
+                this.hoursWorked += hours;
+            }
+            this.isPunchedIn = false;
+        }
     }
 }

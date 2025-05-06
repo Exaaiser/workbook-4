@@ -43,4 +43,19 @@ public class Room {
         public void setDirty(boolean dirty) {
             this.dirty = dirty;
         }
+    public void checkIn() {
+        this.occupied = true;
+        this.dirty = true;
     }
+
+    public void checkOut() {
+        this.occupied = false;
+        this.dirty = true; // Room remains dirty after checkout
+    }
+
+    public void cleanRoom() {
+        this.dirty = false;
+    }
+}
+
+
